@@ -1,8 +1,10 @@
+# import the necessary packages
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import seaborn as sns
 
+# Load the data
 x = []
 y = []
 
@@ -19,6 +21,8 @@ y = np.array(y)
 # plt.scatter(x, y)
 # plt.show()
 
+# Define the cost function
+
 
 def cost(x, y, w, b):
     m = x.shape[0]
@@ -29,6 +33,8 @@ def cost(x, y, w, b):
         cost += (f - y[i])**2
     total_cost = cost/(2*m)
     return total_cost
+
+# Define the gradient function
 
 
 def compute_gradient(x, y, w, b):
@@ -43,6 +49,8 @@ def compute_gradient(x, y, w, b):
     db = db/m
     return dw, db
 
+# Define the gradient descent function
+
 
 def gradient_descent(x, y, w, b, learning_rate, iterations):
     cost_history = []
@@ -54,11 +62,13 @@ def gradient_descent(x, y, w, b, learning_rate, iterations):
     return w, b, cost_history
 
 
+# Define the parameters and hyperparameters
 w_init = 0
 b_init = 0
 learning_rate = 0.004
-iterations = 10000
+iterations = 40000
 
+# Run the gradient descent algorithm
 w, b, cost_history = gradient_descent(
     x, y, w_init, b_init, learning_rate, iterations)
 
@@ -68,6 +78,7 @@ w, b, cost_history = gradient_descent(
 # plt.plot(cost_history)
 # plt.show()
 
+# Plot the results
 plt.scatter(x, y)
 plt.plot(x, w*x+b, color='red')
 plt.show()

@@ -1,8 +1,10 @@
+# Importing the libraries
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import seaborn as sns
 
+# Loading the dataset
 x = []
 y = []
 
@@ -16,9 +18,13 @@ with open('log_regr_data.txt', 'r') as f:
 x = np.array(x)
 y = np.array(y)
 
+# Defining the sigmoid function
+
 
 def sigmoid(z):
     return 1/(1+np.exp(-z))
+
+# Defining the cost function
 
 
 def cost(x, y, w, b):
@@ -30,6 +36,8 @@ def cost(x, y, w, b):
         cost += -y[i]*np.log(f_wb) - (1-y[i])*np.log(1-f_wb)
     total_cost = cost/m
     return total_cost
+
+# Defining the function to compute gradients
 
 
 def compute_gradients(x, y, w, b):
@@ -46,6 +54,8 @@ def compute_gradients(x, y, w, b):
     dj_db = dj_db/m
     return dj_db, dj_dw
 
+# Defining the gradient descent function
+
 
 def gradient_descent(x, y, w, b, learning_rate, iterations):
     cost_history = []
@@ -58,16 +68,21 @@ def gradient_descent(x, y, w, b, learning_rate, iterations):
     return w, b, cost_history
 
 
+# Defining the parameters and hyperparameters
 w_init = 0.01 * (np.random.rand(2).reshape(-1, 1) - 0.5)
 b_init = np.random.randn(1)
 iterations = 100000
 learning_rate = 0.001
 
+# Running the gradient descent algorithm
 w, b, cost_history = gradient_descent(
     x, y, w_init, b_init, learning_rate, iterations)
 
+# Plotting the cost history
 plt.plot(np.linspace(0, iterations, iterations), cost_history)
 plt.show()
+
+# Defining the function to classify the data
 
 
 def classify(x, w, b):
@@ -79,20 +94,18 @@ def classify(x, w, b):
         return 0
 
 
+# List to store the predicted values
 predicted = []
 
+# Making predictions
 for i in range(x.shape[0]):
     predicted.append(classify(x[i], w, b))
 
 predicted = np.array(predicted)
 
-print(predicted.sum())
-
-print(x.shape)
-print(y.shape)
-print(predicted.shape)
+# Plotting the data
 plt.scatter(x[:, 0], x[:, 1], c=predicted, label='predicted')
-# plt.scatter(x[:, 0], x[:, 1], c=y, label='actual')
+plt.scatter(x[:, 0], x[:, 1], c=y, label='actual')
 plt.legend()
 plt.show()
 
